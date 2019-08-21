@@ -10,7 +10,7 @@
   
   <title>
     
-      Android – Swipe item trong RecylerView | Diary of Duc
+      Phỏng vấn Fresher Android tại FPT | Diary of Duc
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Android – Swipe item trong RecylerView</h2>
-  <p class="post-date">2019-06-29</p>
+  <h2>Phỏng vấn Fresher Android tại FPT</h2>
+  <p class="post-date">2019-08-22</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -147,34 +147,52 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>Mọi người đã quá quen thuộc với việc swipe để xóa tin nhắn trong các ứng dụng nhắn tin, bài viết này sẽ hướng dẫn cách chúng ta swipe, tạo button và bắt sự kiện trong mỗi item của <code>RecyclerView</code>.</p>
-<h3 id="Hoat-dong-nhu-the-nao"><a href="#Hoat-dong-nhu-the-nao" class="headerlink" title="Hoạt động như thế nào"></a>Hoạt động như thế nào</h3><ol>
-<li>Sử dụng animation cho swipe mỗi item</li>
-<li>Dùng ItemTouchHelper cho việc vẽ, swipe back,  bắt sự kiện nút Button</li>
-</ol>
-<p><br></p>
-<h3 id="Trien-khai"><a href="#Trien-khai" class="headerlink" title="Triển khai"></a>Triển khai</h3><h5 id="Set-Animation-cho-moi-item"><a href="#Set-Animation-cho-moi-item" class="headerlink" title="Set Animation cho mỗi item"></a>Set Animation cho mỗi item</h5><p>Trong Adapter, ta swipe cho mỗi item từ phải sang trái bằng cách dùng <code>AnimationUtils</code>.<br>Nếu không muốn swipe từ phải sang trái, xem tại <a href="https://developer.android.com/reference/android/view/animation/AnimationUtils.html#loadAnimation(android.content.Context,%20int)" target="_blank" rel="noopener">đây</a>.</p>
-<script src="https://gist.github.com/mduccc/8eb97c8be431a1138199422a2cb1af49.js"></script>
-
-<p>Item sẽ được swipe, nhưng sẽ mất khỏi màn hình, không thể swipe back. Ta sẽ giải quyết vấn đề này ở bước tiếp theo.<br><br></p>
-<h5 id="Swipe-back-tao-button"><a href="#Swipe-back-tao-button" class="headerlink" title="Swipe back, tạo button"></a>Swipe back, tạo button</h5><p>Ta cần 1 điểm cho item dừng lại, mình sẽ dùng <code>ItemTouchHelper</code> để bắt vị trí item chạy và cho nó dừng lại.</p>
-<p>Attach tới 1 <code>RecyclerView</code> qua id của view.</p>
-<script src="https://gist.github.com/mduccc/4828b4e3e6f98293a8fa473a6fa68486.js"></script>
-
-<p><code>swipeController</code> chứa một class xử lý khi swipe</p>
-<script src="https://gist.github.com/mduccc/4e63129d67f4324590157592995cf7d1.js"></script>   
-
-<p><code>*</code> <code>onMove</code>: Phương thức này được gọi khi item đang swipe<br><code>*</code> <code>onSwiped</code>: Được gọi khi item đã swipe xong<br><code>*</code> <code>onChildDraw</code>: Được gọi khi item đang swipe và cả swipe xong. Đây là nơi ta sẽ vẽ button và bắt sự kiện<br><code>*</code> <code>getMovementFlags</code>: Cấu hình swipe back: START, END, TOP, DOWN<br>Ta đã cấu hình swipe back cho item.<br><br><br>Sau khi item đã swipe và dừng lại, nó cần để lộ 1 button hiện ra. Button Xóa chẳng hạn. Ta đi vẽ nó.</p>
-<script src="https://gist.github.com/mduccc/c844e0be5c0de66666091d41b54c7ea4.js"></script>
-
-<p>Nó sẽ giống như này:<br><img src="https://i.imgur.com/W6ZFMHn.png"><br><br></p>
-<h5 id="Bat-su-kien-cho-button"><a href="#Bat-su-kien-cho-button" class="headerlink" title="Bắt sự kiện cho button"></a>Bắt sự kiện cho button</h5><p>Button do ta tự vẽ ra, không có phương thức bắt sự kiện như button của Android. Do vậy ta sẽ tự build sự kiện click cho button ta vẽ.</p>
-<p>Với tư tưởng bắt tọa độ ngón tay chạm vào RecyclerView trên màn hình, nếu button đang hiện ra và tọa độ chạm nằm trong tọa độ của 4 cạnh button đó -&gt; button tại item đó được click. </p>
-<p>Chúng ta sẽ chỉ cho swipe 1 item tại 1 thời điểm, khi swipe item này, item đã swipe trước đó sẽ phải đóng lại.</p>
-<p>Đi bắt sự kiện.     </p>
-<script src="https://gist.github.com/mduccc/1b917ea189d2a6bc7554b3f8f7c964a8.js"></script> 
-
-<p>Vậy là đã xong. Mình có viết một project mẫu tại <a href="https://github.com/mduccc/recycler_view_swipe_example" target="_blank" rel="noopener">đây</a>. </p>
+    <section class="markdown-content"><p>Năm nay mình đã là sinh viên năm thứ 5 rồi, cũng sắp phải bước ra trường đời, mình băn khoăn không biết chọn công ty nào để làm việc sau này. Mình lên 1 kế hoạch, đó là đi phỏng vấn dạo :3, FPT Software là công ty đầu tiên mình chọn để phỏng vấn. Mình quen 1 chị HR bên FPT Software trên LinkedIn, mình liên hệ với chị và lên lịch phỏng vấn tại 1 event Workshop của FPT. </p>
+<p><br><br>Đó là 1 ngày nắng nhẹ, có mưa, mình cùng thằng bạn sách balo xuống Workshop, 2 thằng dậy từ sáng sớm và bắt xe từ Thái Nguyên đi Hà Nội. Trên xe bọn mình gặp 1 bạn gái rất xinh xắn, đáng yêu làm mình rung động con tim, lúc xuống xe mình đợi bạn ý xuống để  hỏi đường nhưng bạn ý mất tích luôn :3, và thế là hết. Tầm 8h hơn bọn mình có mặt tại Workshop, check in và ngội tham tham dự sự kiện. Nghe các speaker giới thiệu về FPT, các dự án đang cần chiêu mộ nhân tài (mình không public thông tin dự án vì FPT yêu cầu vậy), ở đây có cafe, nước uống free nhưng bọn mình ko dùng vì đã mua nước ngọt từ bên ngoài :3. Nửa đầu event khá là hay ho, các speaker chia sẻ khá nhiều về môi trường lại việc, chế độ đãi ngộ (được đi onsite, thưởng dự án, thưởng cho nhân viên có performance tốt, hỗ trợ mua nhà, thể thao, du lịch,…), giới thiệu về  các khách hàng là một trong các hãng lớn nhất thế giới, giải pháp công nghệ mà FPT thực hiện.<br><br><br>Đến giờ nghỉ giải lao là thời gian để  bọn mình đi phỏng vấn, bọn mình đi loanh quanh tìm bàn phỏng vấn, chị nhân viên ở đó dẫn tụi mình lên tầng 2. Anh phỏng vấn bọn mình nhìn trông khá nhỏ, trông rất khiêm tốn, mình lẽ phép chào hỏi anh rồi ngồi xuống ghế, chị nhân viên đưa CV cho anh PV. Có 3 người đang chờ phỏng vấn (cả mình), bạn đầu tiên đang học Fresher tại FPT, mình thấy bạn này nắm kiến thức cơ bản về Java khá tốt. Anh PV bắt đầu hỏi bạn ý:</p>
+<ul>
+<li>Em học Android được bao lâu rồi?</li>
+<li>Em có nói được tiếng Anh không? </li>
+<li>Em đã tương tác với API chưa? Em dùng cách gì để tương tác.</li>
+<li>Em đã viết App nào chưa?<br>Sau đó anh PV bắt đầu hỏi bạn ý về  OPP trong Java: </li>
+<li>Đa hình(Override), nạp chồng(Overload) là gì? Các phương thức nạp chồng có giống nhau về tham số và dữ liệu trả về không?</li>
+<li>Em hãy phân biệt giữa StringBuilder và String?</li>
+<li>Có 2 instance lần lượt của 2 class A và B, 2 class đều có thuộc tính và phương thức giống nhau, giá trị cũng giống nhau. Nếu so sánh instanceA == instanceB thì kết quả sẽ là true hay false?</li>
+</ul>
+<p>Mội hồi lâu… Anh PV quay sang hỏi bạn mình:</p>
+<ul>
+<li>Em tên là gì? Em đang học ở đâu?</li>
+<li>Em có nói được tiếng Anh không?<br>Thằng bạn mình bắt đầu giới thiệu bằng tiếng Anh, được một hồi anh hỏi:</li>
+<li>Em đã viết được App nào chưa?</li>
+<li>Em dùng Constrant Layout chưa?</li>
+</ul>
+<p>Thằng bạn mình trả lời một hồi, sau đó anh PV quay sang hỏi mình:</p>
+<ul>
+<li>Em tên là gì? Đang học ở đâu?</li>
+<li>Dạ! Em tên Nguyễn Minh Đức. Em vừa bắt đầu học năm thứ năm tại ICTU.</li>
+<li>Em có biết tiếng Anh không?</li>
+<li>Tiếng Anh của em đang ở mức đọc hiểu tài liệu chuyên ngành.</li>
+<li>Em dùng Contraint Layout chưa? Dùng nó có tác dụng gì?</li>
+<li>Em dùng rồi ạ! Em thích cái tác dụng là chia layout theo phần trăm của nó và rằng buộc các View lại với nhau theo các cạnh.</li>
+<li>Chỉ thế thôi à?</li>
+<li>Dạ vâng.</li>
+<li>Em đã call API chưa? Em dùng gì để  xử lý?</li>
+<li>Em đã call API rồi ạ! Ngày mới học Android thì em dùng thằng OpenHttpConnection thuần trong Android. Hiện tại thì em dùng Retrofit hoặc OkHttp (2 thằng này 1 nhà :v)</li>
+<li>Em có dùng Unit Test không?</li>
+<li>Dạ em chưa? Em tự test thủ công thôi ạ (Thực ra mình dùng rồi nhưng dùng ít nên ko dám chém gió).</li>
+<li>Em dùng DB trong Android chưa? Dùng cái gì để xử  lý?</li>
+<li>Dạ em dùng rồi, em dùng thuần SqliteOpenHelper để thao tác với DB</li>
+<li>Còn dùng gì nữa không?</li>
+<li>Dạ không ạ (Định bảo em dùng Room nhưng mình mới test nó 1 lần nên lại ko dám chém gió)</li>
+<li>Em có dùng Desgin partten nào không?</li>
+<li>Em dùng MVVM.</li>
+<li>Có gì ở MVVM mà em thích?</li>
+<li>Em thích nhất là nhiều View có thể gọi tới một ViewModel, em thường dùng Data binding kèm theo. Vậy thôi ạ.</li>
+</ul>
+<p>Sau đó anh ý và bọn mình trao đổi với nhau một lúc lâu về công nghệ, thời gian ra trường của mình, thời gian mình đi thực tập, và anh ý lấy số  điện thoại của mình. Mình bảo mình toàn dùng Kotlin, Java rất ít dùng. Sang năm thì mình ra trường, tháng 11 mình mới rảnh để đi thực tập. Mình còn không bị hỏi về ngôn ngữ như bạn đầu tiên :v</p>
+<p>Vậy kết thúc cuộc phỏng vấn, bọn mình tiếp tục event và tham gia mini game và rời đi.</p>
+<p>Mình và bạn lang thang, đi ăn, ra phố  đi bộ ngắm gái, trời tự dưng mưa :3. Đến chiều 2 đứa bắt xe về Thái Nguyên.</p>
+<p>Sau 3 ngày xem xét cuộc PV và CV, chị HR nhắn tin cho mình báo trúng tuyển, hẹn mình 1/11/2019 xuống thử thách 2 tháng thực tập trong dự án tại đơn vị FPT FHS (FPT Healthcare Solution), trong 2 tháng đó nếu performance của mình tốt sẽ ký hợp đồng với mình và bảo mình phải trau dồi tiếng Anh.</p>
+<p>Mình cũng không biết là mình đi PV Fresher lại thành ra vào dự án tại đơn vị FHS :3, mình cũng chưa dự định 100% vào đó, từ giờ đến tháng 11 mình sẽ tìm các cơ hội khác. </p>
 </section>
     <!-- Tags START -->
     
@@ -193,20 +211,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/android-recyclerview/">
+      <a class="nav-left" href="/android-mvvm-data-binding/">
         <span class="nav-arrow">← </span>
         
-          Android – RecylerView
+          Android MVVM cùng Data binding
         
       </a>
     
-    
-      <a class="nav-right" href="/i++ vs ++i/">
-        
-          ++i vs i++
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -231,7 +242,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Hoat-dong-nhu-the-nao"><span class="toc-nav-text">Hoạt động như thế nào</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Trien-khai"><span class="toc-nav-text">Triển khai</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Set-Animation-cho-moi-item"><span class="toc-nav-text">Set Animation cho mỗi item</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Swipe-back-tao-button"><span class="toc-nav-text">Swipe back, tạo button</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Bat-su-kien-cho-button"><span class="toc-nav-text">Bắt sự kiện cho button</span></a></li></ol></li></ol></li></ol>
+      <ol class="nav">none</ol>
     
   </div>
 </aside>
@@ -241,7 +252,7 @@
 
 <script>
   (function () {
-    var url = 'http://localhost:4000/android-recycler-view-swipe/';
+    var url = 'http://localhost:4000/phong-van-fpt/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -297,7 +308,7 @@
     var gitmentConfig = "";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Android – Swipe item trong RecylerView",
+        id: "Phỏng vấn Fresher Android tại FPT",
         owner: "",
         repo: "",
         oauth: {
@@ -325,7 +336,7 @@
 <script>
   var disqus_shortname = '';
   
-  var disqus_url = 'http://localhost:4000/android-recycler-view-swipe/';
+  var disqus_url = 'http://localhost:4000/phong-van-fpt/';
   
   (/*function(){
     var dsq = document.createElement('script');
