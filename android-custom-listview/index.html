@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Android - Custom Listview | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android - Custom Listview</h2>
+  <p class="post-date">2018-08-28</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="Default-ListView"><a href="#Default-ListView" class="headerlink" title="Default ListView"></a>Default ListView</h3><p><code>ListView</code> mặc định sẽ trông thế này, mỗi dòng 1 <code>TextView</code>.</p>
+<p><img src="https://i.imgur.com/pgsUNBU.png"></p>
+<p>Code ra nó chỉ cần dùng default <code>Adapter</code> như này:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class MainActivity : <span class="function"><span class="title">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        setUI()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun <span class="function"><span class="title">setUI</span></span>()&#123;</span><br><span class="line">        val listView = ListView(this)</span><br><span class="line">        rl_main_activiy.addView(listView) /* rl_main_activiy: root view id */</span><br><span class="line">        val data = arrayListOf(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>, <span class="string">"g"</span>, <span class="string">"h"</span>, <span class="string">"i"</span>, <span class="string">"k"</span>, <span class="string">"l"</span>, <span class="string">"m"</span>)</span><br><span class="line">        listView.adapter = ArrayAdapter( this, android.R.layout.simple_list_item_1, data)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Nếu vẫn chưa biết <code>Adapter</code> để làm gì, thì nó đóng vai trò như lớp trung gian để đổ dữ liệu vào <code>ListView</code> (nói riêng).<br><br></p>
+<p>Mà còn thắc mắc <code>findViewById()</code> ở đâu thì xin nhắc đây là <code>Kotlin</code> nhé, không phải <code>Java</code>.<br><br></p>
+<p>Giờ muốn hiện thị nhiều hơn thì sao? Như là hiện thị 3 <code>TextView</code> trên 1 dòng. Câu trả lời là hãy đi custom <code>ListView</code>.</p>
+<h3 id="Custom-Listview"><a href="#Custom-Listview" class="headerlink" title="Custom Listview"></a>Custom Listview</h3><h5 id="Custom-Layout"><a href="#Custom-Layout" class="headerlink" title="Custom Layout"></a>Custom Layout</h5><p>Tạo 1 custom <code>Layout</code> như thế này:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;android.support.constraint.ConstraintLayout</span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:orientation=<span class="string">"horizontal"</span></span><br><span class="line">        android:paddingBottom=<span class="string">"10dp"</span></span><br><span class="line">        android:paddingTop=<span class="string">"10dp"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=<span class="string">"@+id/textView"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"30"</span></span><br><span class="line">            android:layout_marginLeft=<span class="string">"10dp"</span></span><br><span class="line">            android:gravity=<span class="string">"left"</span></span><br><span class="line">            android:text=<span class="string">"a"</span>/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=<span class="string">"@+id/textView2"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"30"</span></span><br><span class="line">            android:gravity=<span class="string">"center"</span></span><br><span class="line">            android:text=<span class="string">"b"</span>/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">            android:id=<span class="string">"@+id/textView3"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"30"</span></span><br><span class="line">            android:layout_marginRight=<span class="string">"10dp"</span></span><br><span class="line">            android:gravity=<span class="string">"right"</span></span><br><span class="line">            android:text=<span class="string">"c"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android.support.constraint.ConstraintLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>Trông sẽ như thế này:<br><img src="https://i.imgur.com/jTtBi1q.png"></p>
+<h5 id="Custom-Adapter"><a href="#Custom-Adapter" class="headerlink" title="Custom Adapter"></a>Custom Adapter</h5><p><code>Data</code> là class chứa 3 giá trị của 3 <code>TextView</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Data(val p1: String, val p2: String, val p3: String)</span><br></pre></td></tr></table></figure>
+<p>Tạo 1 class <code>ListviewAdapter</code>, class này extend lại <code>BaseAdapter</code> Hoặc <code>ArrayAdapter</code>, ở đây sẽ extend <code>BaseAdapter</code>.<br><br></p>
+<p>Sau đó ta cần override nhưng phương thức của lớp Cha:<br><code>*</code> <code>getView()</code>: Trả về view cho mỗi item trong <code>ListView</code><br><code>*</code> <code>getItem()</code>: Trả về vị trí của item trong <code>ListView</code><br><code>*</code> <code>getItemId()</code>: Trả về id của item trong <code>ListView</code><br><code>*</code> <code>getCount()</code>:  Trả về kích cỡ của <code>ListView</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class ListviewAdapter(val activity: MainActivity, val data: ArrayList&lt;Data&gt;): <span class="function"><span class="title">BaseAdapter</span></span>()&#123;</span><br><span class="line"></span><br><span class="line">    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View &#123;</span><br><span class="line">        val inflater = activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater</span><br><span class="line">        val layout = inflater.inflate(R.layout.custom_layout, null)</span><br><span class="line">        layout.textView.text = data[position].p1</span><br><span class="line">        layout.textView2.text = data[position].p2</span><br><span class="line">        layout.textView3.text = data[position].p3</span><br><span class="line">        <span class="built_in">return</span> layout</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun getItem(position: Int): Any &#123;</span><br><span class="line">        Log.d(<span class="string">"getItem"</span>, position.toString())</span><br><span class="line">        <span class="built_in">return</span> position</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun getItemId(position: Int): Long &#123;</span><br><span class="line">        Log.d(<span class="string">"getItemId"</span>, position.toString())</span><br><span class="line">        <span class="built_in">return</span> position.toLong()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun getCount(): Int &#123;</span><br><span class="line">        <span class="built_in">return</span> data.size</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Chắc là ai cũng thắc mắc là <code>getItem()</code> với <code>getItemId()</code> để làm gì.<br><br></p>
+<p>Trong <code>getView()</code>, ngoài cách lấy vị trí item trực tiếp từ biến <code>postion</code>, ta có còn có 1 cách nữa, đó là lấy thông qua <code>getItem()</code> hoặc <code>getItemId()</code>.<br><br></p>
+<p>Khác nhau là khi lấy vị trí trực tiếp từ biến <code>postion</code>, thì chỉ có thể lấy thôi. Nhưng lấy qua <code>getItem()</code> hoặc <code>getItemId()</code>, ta còn có thể làm nhiều thứ nữa, như đoạn code bên trên sẽ show <code>Log()</code> ra chẳng hạn.<br><br></p>
+<p><code>getItem()</code> và <code>getItemId()</code> cũng không khác nhau ngoài trả về khác kiểu dữ liệu, nếu item có id riêng thì sẽ thực hiện lấy id đó trong <code>getItemId()</code>.</p>
+<h5 id="Set-Adapter"><a href="#Set-Adapter" class="headerlink" title="Set Adapter"></a>Set Adapter</h5><p>Có custom <code>Layout</code> và custom <code>Adapter</code> rồi, việc cuối cùng là đổ dữ liệu vào <code>ListView</code> thông qua custom <code>Adapter</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">class MainActivity : <span class="function"><span class="title">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    private val data = ArrayList&lt;Data&gt;()</span><br><span class="line">    private lateinit var listView: ListView</span><br><span class="line">    private lateinit var listViewAdapter: ListviewAdapter</span><br><span class="line"></span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        setUI()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun <span class="function"><span class="title">setUI</span></span>()&#123;</span><br><span class="line">        listView = ListView(this)</span><br><span class="line">        rl_main_activiy.addView(listView)</span><br><span class="line">        data.add(Data(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"k"</span>,<span class="string">"l"</span>,<span class="string">"m"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"n"</span>,<span class="string">"o"</span>,<span class="string">"p"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"q"</span>,<span class="string">"r"</span>,<span class="string">"s"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"k"</span>,<span class="string">"l"</span>,<span class="string">"m"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"n"</span>,<span class="string">"o"</span>,<span class="string">"p"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"q"</span>,<span class="string">"r"</span>,<span class="string">"s"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"d"</span>,<span class="string">"e"</span>,<span class="string">"f"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"i"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"k"</span>,<span class="string">"l"</span>,<span class="string">"m"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"n"</span>,<span class="string">"o"</span>,<span class="string">"p"</span>))</span><br><span class="line">        data.add(Data(<span class="string">"q"</span>,<span class="string">"r"</span>,<span class="string">"s"</span>))</span><br><span class="line">        listViewAdapter = ListviewAdapter(this, data)</span><br><span class="line">        listView.adapter = listViewAdapter</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Kết quả:<br><img src="https://i.imgur.com/d8F5hKn.png"></p>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><p>Sau khi đã custom <code>ListView</code>, chúng ta cần bắt sự kiện cho nó:</p>
+<p><code>*</code> parent: view cha.<br><code>*</code> view: view đã chạm.<br><code>*</code> position: vị trí trong <code>ListView</code>.<br><code>*</code> id: id của view.</p>
+<h5 id="OnItem"><a href="#OnItem" class="headerlink" title="OnItem"></a>OnItem</h5><p>Sự kiện khi chạm</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">listView.setOnItemClickListener &#123; parent, view, position, id -&gt;</span><br><span class="line">            Toast.makeText(this, <span class="string">"One <span class="variable">$&#123;view.textView.text&#125;</span> <span class="variable">$&#123;view.textView2.text&#125;</span> <span class="variable">$&#123;view.textView3.text&#125;</span>"</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<br>
+
+<h5 id="OnItemLong"><a href="#OnItemLong" class="headerlink" title="OnItemLong"></a>OnItemLong</h5><p>Sự kiện khi chạm và giữ<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">listView.setOnItemLongClickListener &#123; parent, view, position, id -&gt;</span><br><span class="line">            Toast.makeText(this, <span class="string">"Long <span class="variable">$&#123;view.textView.text&#125;</span> <span class="variable">$&#123;view.textView2.text&#125;</span> <span class="variable">$&#123;view.textView3.text&#125;</span>"</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">            <span class="literal">true</span></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Add-Remove-Items"><a href="#Add-Remove-Items" class="headerlink" title="Add, Remove Items"></a>Add, Remove Items</h3><h5 id="Add-Items"><a href="#Add-Items" class="headerlink" title="Add Items"></a>Add Items</h5><p>Thêm một phần tử vào <code>ListView</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.add(Data(<span class="string">"new item"</span>,<span class="string">"new item"</span>,<span class="string">"new item"</span>))</span><br><span class="line">listViewAdapter.notifyDataSetChanged()</span><br></pre></td></tr></table></figure>
+<h5 id="Remove-Items"><a href="#Remove-Items" class="headerlink" title="Remove Items"></a>Remove Items</h5><p>Xóa phẩn tử khỏi <code>ListView</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data.removeAt(position)</span><br><span class="line">listViewAdapter.notifyDataSetChanged()</span><br></pre></td></tr></table></figure>
+<p>Phải chắc chắn gọi <code>notifyDataSetChanged()</code> để thay đổi.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/kotlin–collections/">
+        <span class="nav-arrow">← </span>
+        
+          Kotlin – Collections
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/android-thread/">
+        
+          Android - Theard
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Default-ListView"><span class="toc-nav-text">Default ListView</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Custom-Listview"><span class="toc-nav-text">Custom Listview</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Custom-Layout"><span class="toc-nav-text">Custom Layout</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Custom-Adapter"><span class="toc-nav-text">Custom Adapter</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Set-Adapter"><span class="toc-nav-text">Set Adapter</span></a></li></ol></li></ol><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Events"><span class="toc-nav-text">Events</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#OnItem"><span class="toc-nav-text">OnItem</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#OnItemLong"><span class="toc-nav-text">OnItemLong</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Add-Remove-Items"><span class="toc-nav-text">Add, Remove Items</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Add-Items"><span class="toc-nav-text">Add Items</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Remove-Items"><span class="toc-nav-text">Remove Items</span></a></li></ol></li>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/android-custom-listview/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android - Custom Listview",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/android-custom-listview/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Android – Retrofit | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android – Retrofit</h2>
+  <p class="post-date">2019-03-13</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="Gioi-thieu"><a href="#Gioi-thieu" class="headerlink" title="Giới thiệu"></a>Giới thiệu</h3><p><code>Retrofit</code> là thư viện được viết bằng Java, mục đích để dễ dàng gửi <code>Request</code> HTTP, HTTPS lên <code>Server</code>. </p>
+<p>Hỗ trợ phương thức <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>DELETE</code>.</p>
+<p>Hỗ trợ ánh xạ Json sang Gson.</p>
+<p><code>*</code> <code>Gson</code>: Ánh xạ Json Object sang Java/Kotlin Object.</p>
+<h3 id="Su-dung"><a href="#Su-dung" class="headerlink" title="Sử dụng"></a>Sử dụng</h3><p>Import thư viện cần thiết:<br><code>implementation &#39;com.squareup.retrofit2:retrofit:2.5.0&#39;</code><br><code>implementation &#39;com.squareup.retrofit2:converter-gson:2.0.2&#39;</code></p>
+<p>Chúng ta sẽ xây dựng 1 ứng dụng tìm kiếm thành phố trên thế giới đơn giản đơn giản với API có sẵn</p>
+<h5 id="API"><a href="#API" class="headerlink" title="API"></a>API</h5><p>API: <code>https://location-query.herokuapp.com/location?key_word=&lt;key_word&gt;</code></p>
+<p><code>*</code> <code>key_word</code>: Là từ khóa cần tìm kiếm </p>
+<p>Ví dụ tìm kiếm <code>London</code>:<br><a href="https://location-query.herokuapp.com/location?key_word=london" target="_blank" rel="noopener">https://location-query.herokuapp.com/location?key_word=london</a></p>
+<p>Response:</p>
+<pre style="height: 250px">
+{
+   "code":200,
+   "key_word":"london",
+   "result":[
+      {
+         "id":2643743,
+         "name":"London",
+         "country":"GB",
+         "coord":{
+            "lon":-0.12574,
+            "lat":51.50853
+         }
+      },
+      {
+         "id":2648110,
+         "name":"Greater London",
+         "country":"GB",
+         "coord":{
+            "lon":-0.16667,
+            "lat":51.5
+         }
+      },
+      {
+         "id":1006984,
+         "name":"East London",
+         "country":"ZA",
+         "coord":{
+            "lon":27.911619,
+            "lat":-33.015289
+         }
+      },
+      {
+         "id":2643734,
+         "name":"Londonderry County Borough",
+         "country":"GB",
+         "coord":{
+            "lon":-7.30917,
+            "lat":54.997211
+         }
+      },
+      {
+         "id":2643744,
+         "name":"City of London",
+         "country":"GB",
+         "coord":{
+            "lon":-0.08901,
+            "lat":51.51334
+         }
+      },
+      {
+         "id":5056033,
+         "name":"London",
+         "country":"US",
+         "coord":{
+            "lon":-95.234978,
+            "lat":40.445
+         }
+      },
+      {
+         "id":6058560,
+         "name":"London",
+         "country":"CA",
+         "coord":{
+            "lon":-81.23304,
+            "lat":42.983391
+         }
+      },
+      {
+         "id":4839420,
+         "name":"New London County",
+         "country":"US",
+         "coord":{
+            "lon":-72.066193,
+            "lat":41.483429
+         }
+      },
+      {
+         "id":7535661,
+         "name":"London Borough of Harrow",
+         "country":"GB",
+         "coord":{
+            "lon":-0.33333,
+            "lat":51.566669
+         }
+      },
+      {
+         "id":6058563,
+         "name":"Londonderry",
+         "country":"CA",
+         "coord":{
+            "lon":-63.598701,
+            "lat":45.483452
+         }
+      },
+      {
+         "id":3489741,
+         "name":"Little London",
+         "country":"JM",
+         "coord":{
+            "lon":-78.216408,
+            "lat":18.248301
+         }
+      },
+      {
+         "id":2643741,
+         "name":"City of London",
+         "country":"GB",
+         "coord":{
+            "lon":-0.09184,
+            "lat":51.512791
+         }
+      },
+      {
+         "id":4839416,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-72.099518,
+            "lat":41.355652
+         }
+      },
+      {
+         "id":1644003,
+         "name":"Glondong",
+         "country":"ID",
+         "coord":{
+            "lon":111.891602,
+            "lat":-6.7924
+         }
+      },
+      {
+         "id":4030939,
+         "name":"London Village",
+         "country":"KI",
+         "coord":{
+            "lon":-157.475021,
+            "lat":1.98487
+         }
+      },
+      {
+         "id":4119617,
+         "name":"London",
+         "country":"US",
+         "coord":{
+            "lon":-93.25296,
+            "lat":35.328972
+         }
+      },
+      {
+         "id":4298960,
+         "name":"London",
+         "country":"US",
+         "coord":{
+            "lon":-84.08326,
+            "lat":37.128979
+         }
+      },
+      {
+         "id":4361094,
+         "name":"Londontowne",
+         "country":"US",
+         "coord":{
+            "lon":-76.549408,
+            "lat":38.933449
+         }
+      },
+      {
+         "id":4400423,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-91.400978,
+            "lat":39.58532
+         }
+      },
+      {
+         "id":4517009,
+         "name":"London",
+         "country":"US",
+         "coord":{
+            "lon":-83.44825,
+            "lat":39.886452
+         }
+      },
+      {
+         "id":4868768,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-91.399597,
+            "lat":40.926979
+         }
+      },
+      {
+         "id":5039111,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-94.944183,
+            "lat":45.301079
+         }
+      },
+      {
+         "id":5088905,
+         "name":"Londonderry",
+         "country":"US",
+         "coord":{
+            "lon":-71.373947,
+            "lat":42.865089
+         }
+      },
+      {
+         "id":5090189,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-71.985077,
+            "lat":43.41396
+         }
+      },
+      {
+         "id":5164352,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-82.399887,
+            "lat":41.085049
+         }
+      },
+      {
+         "id":5264455,
+         "name":"New London",
+         "country":"US",
+         "coord":{
+            "lon":-88.73983,
+            "lat":44.392761
+         }
+      },
+      {
+         "id":5367815,
+         "name":"London",
+         "country":"US",
+         "coord":{
+            "lon":-119.443176,
+            "lat":36.476059
+         }
+      }
+   ]
+}
+</pre>
+
+<h5 id="Anh-xa-Json-vao-Object-Kotlin"><a href="#Anh-xa-Json-vao-Object-Kotlin" class="headerlink" title="Ánh xạ Json vào Object Kotlin"></a>Ánh xạ Json vào Object Kotlin</h5><p>CityCollection.kt<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class CityCollection (val id: Long, val name: String, val country: String, val coord: Coord)&#123;</span><br><span class="line">    inner class Coord(val lon: Double, val lat: Double)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ResponseCollection.kt<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class ResponseCollection (val code: Int, val key_word: String, val result: ArrayList&lt;CityCollection&gt;)</span><br></pre></td></tr></table></figure></p>
+<h5 id="Xay-dung-Interface-cho-API"><a href="#Xay-dung-Interface-cho-API" class="headerlink" title="Xây dựng Interface cho API"></a>Xây dựng Interface cho API</h5><p>API.kt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface API &#123;</span><br><span class="line">    @GET(<span class="string">"location"</span>)</span><br><span class="line">    fun requestCity(@Query(<span class="string">"key_word"</span>) key_word: String): Call&lt;ResponseCollection&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Khoi-tao-Retrofit"><a href="#Khoi-tao-Retrofit" class="headerlink" title="Khởi tạo Retrofit"></a>Khởi tạo Retrofit</h5><p>RetrofitCommon.kt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class RetrofitCommon &#123;</span><br><span class="line"></span><br><span class="line">    companion object &#123;</span><br><span class="line">        private val retrofitBuilder =</span><br><span class="line">            Retrofit.Builder()</span><br><span class="line">                .baseUrl(Url.domain)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .build()</span><br><span class="line"></span><br><span class="line">        val retrofit = retrofitBuilder.create(API::class.java)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Xay-dung-Interface-de-cap-nhat-giao-dien"><a href="#Xay-dung-Interface-de-cap-nhat-giao-dien" class="headerlink" title="Xây dựng Interface để cập nhật giao diện"></a>Xây dựng Interface để cập nhật giao diện</h5><p>OnResponse.kt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface OnResponse &#123;</span><br><span class="line">    fun onResponse(cityCollection: ArrayList&lt;CityCollection&gt;)</span><br><span class="line">    fun onFail(m: String)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Request-toi-API"><a href="#Request-toi-API" class="headerlink" title="Request tới API"></a>Request tới API</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">class RequestCity(private val onResponse: OnResponse) &#123;</span><br><span class="line"></span><br><span class="line">    private lateinit var request: Call&lt;ResponseCollection&gt;</span><br><span class="line"></span><br><span class="line">    fun request(key_word: String) &#123;</span><br><span class="line">        request = RetrofitCommon.retrofit.requestCity(key_word)</span><br><span class="line"></span><br><span class="line">        request.enqueue(object : Callback&lt;ResponseCollection&gt; &#123;</span><br><span class="line">            override fun onFailure(call: Call&lt;ResponseCollection&gt;, t: Throwable) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!request.isCanceled)</span><br><span class="line">                    onResponse.onFail(t.toString())</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onResponse(call: Call&lt;ResponseCollection&gt;, response: Response&lt;ResponseCollection&gt;) &#123;</span><br><span class="line">                val body = response.body()</span><br><span class="line">                body?.<span class="built_in">let</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!request.isCanceled) &#123;</span><br><span class="line">                        <span class="keyword">if</span> (it.code == 200)</span><br><span class="line">                            onResponse.onResponse(it.result)</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                            onResponse.onFail(<span class="string">"Not Found"</span>)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fun <span class="function"><span class="title">cancel</span></span>() &#123;</span><br><span class="line">        request.cancel() </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/srjRNfC.png"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/android-handler-thread/">
+        <span class="nav-arrow">← </span>
+        
+          Android – HandlerThread
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/android-recyclerview/">
+        
+          Android – RecylerView
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Gioi-thieu"><span class="toc-nav-text">Giới thiệu</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Su-dung"><span class="toc-nav-text">Sử dụng</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#API"><span class="toc-nav-text">API</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Anh-xa-Json-vao-Object-Kotlin"><span class="toc-nav-text">Ánh xạ Json vào Object Kotlin</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Xay-dung-Interface-cho-API"><span class="toc-nav-text">Xây dựng Interface cho API</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Khoi-tao-Retrofit"><span class="toc-nav-text">Khởi tạo Retrofit</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Xay-dung-Interface-de-cap-nhat-giao-dien"><span class="toc-nav-text">Xây dựng Interface để cập nhật giao diện</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Request-toi-API"><span class="toc-nav-text">Request tới API</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/android-retrofit/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android – Retrofit",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/android-retrofit/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

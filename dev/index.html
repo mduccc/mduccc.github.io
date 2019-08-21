@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Dev | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <main class="app-body">
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-handler-thread/">Android – HandlerThread</a>
+                    </h2>
+                    <p class="article-date">September 26, 2018</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Lý doĐể biết lý do vì sao dùng HandlerThread, ta đi so sánh Thread với HandlerThread. 
+* Thread: Khi sử dụng Thread, ta chỉ có thể tạo một instanc ...
+                    
+                    </div>
+                    <a class="more" href="/android-handler-thread/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-custom-listview/">Android - Custom Listview</a>
+                    </h2>
+                    <p class="article-date">August 28, 2018</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Default ListViewListView mặc định sẽ trông thế này, mỗi dòng 1 TextView.
+
+Code ra nó chỉ cần dùng default Adapter như này:12345678910111213141516c ...
+                    
+                    </div>
+                    <a class="more" href="/android-custom-listview/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-mvvm-data-binding/">Android MVVM cùng Data binding</a>
+                    </h2>
+                    <p class="article-date">July 29, 2019</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        MVVM là 1 design pattern trong Android, mục đích cải thiện kiến trúc của ứng dụng, dễ dàng phát triển, gỡ lỗi, testing,…MVVM là : Model, ViewModel ...
+                    
+                    </div>
+                    <a class="more" href="/android-mvvm-data-binding/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-permission/">Android – Permission</a>
+                    </h2>
+                    <p class="article-date">July 24, 2019</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Để ý trong các ứng dụng Android muốn truy cập vị trí, camera, bộ nhớ,… đều cần người dùng cấp quyền truy cập, mục đích nhằm bảo vệ quyền riêng tư  ...
+                    
+                    </div>
+                    <a class="more" href="/android-permission/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-recycler-view-swipe/">Android – Swipe item trong RecylerView</a>
+                    </h2>
+                    <p class="article-date">June 29, 2019</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Mọi người đã quá quen thuộc với việc swipe để xóa tin nhắn trong các ứng dụng nhắn tin, bài viết này sẽ hướng dẫn cách chúng ta swipe, tạo button  ...
+                    
+                    </div>
+                    <a class="more" href="/android-recycler-view-swipe/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-recyclerview/">Android – RecylerView</a>
+                    </h2>
+                    <p class="article-date">April 1, 2019</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Giới thiệuRecyclerView là một ViewGroup, tương tự như ListView, nhưng nó được xây dựng để cho lập trình viên có thể kiểm soát, tùy chỉnh sâu hơn,  ...
+                    
+                    </div>
+                    <a class="more" href="/android-recyclerview/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-thread/">Android - Theard</a>
+                    </h2>
+                    <p class="article-date">August 31, 2018</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Lý doMặc định logic code của chúng ta viết sẽ chạy trên Main Thread, hay còn gọi là UI Thread. Nếu có logic code nào đó chạy quá chậm (I/O, thực t ...
+                    
+                    </div>
+                    <a class="more" href="/android-thread/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/facebook-chatbot/">PHP – Viết Chatbot Facebook</a>
+                    </h2>
+                    <p class="article-date">November 23, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+  <a href="/tags#chatbot">
+    <span class="tag-code">chatbot</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Dạo đây mình có hứng thú tìm hiểu về Chatbot và có viết 1 con để thư giãn bằng PHP, nay xin chia sẻ lại cho mọi người .
+Cơ chế hoạt độngĐể người d ...
+                    
+                    </div>
+                    <a class="more" href="/facebook-chatbot/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/ham-array_rand/">PHP – Random với array_rand()</a>
+                    </h2>
+                    <p class="article-date">August 16, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        PHP cung cấp sẵn cho lập trình viên hàm array_rand() nhằm chọn ra giá trị ngẫu ngẫu nhiên (random) trong một mảng.
+Để sử dụng ta sẽ truyền tham số ...
+                    
+                    </div>
+                    <a class="more" href="/ham-array_rand/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/i++ vs ++i/">++i vs i++</a>
+                    </h2>
+                    <p class="article-date">July 3, 2019</p>
+                    
+                    
+  <a href="/tags#knowledge">
+    <span class="tag-code">knowledge</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Mình tin là rất nhiều người thắc mắc ++i với i++ đều là tăng giá trị lên của biến i lên 1 lần, nhưng không biết 2 cách tăng khác nhau như thế nào, ...
+                    
+                    </div>
+                    <a class="more" href="/i++ vs ++i/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/ket-noi-mysqli/">PHP – Cơ sở dữ liệu Mysqli</a>
+                    </h2>
+                    <p class="article-date">September 22, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Là ngôn ngữ lập trình Backend nền Web, PHP hiển nhiên phải hỗ trợ kết nối tới cơ sở dữ liệu, lập trình viên PHP sẽ vô dụng nếu không biết cách tươ ...
+                    
+                    </div>
+                    <a class="more" href="/ket-noi-mysqli/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/kotlin-opp/">Kotlin Opp</a>
+                    </h2>
+                    <p class="article-date">March 28, 2018</p>
+                    
+                    
+  <a href="/tags#kotlin">
+    <span class="tag-code">kotlin</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Chúng ta đã làm quen với cách sử dụng Kotlin, phần này sẽ đưa ra các ví dụ về kế thừa, nạp chồng, ghi đè , trừu tượng, … trong Kotlin hướng đối tư ...
+                    
+                    </div>
+                    <a class="more" href="/kotlin-opp/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/kotlin-vs-java/">Kotlin với Java</a>
+                    </h2>
+                    <p class="article-date">January 6, 2018</p>
+                    
+                    
+  <a href="/tags#kotlin">
+    <span class="tag-code">kotlin</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Trước tiên mình sẽ nói sơ qua về ngôn ngữ này. Kotlin ra mắt lần đầu năm 2011 do JetBrains phát triển. Có rất nhiều ưu điểm so với Java và thay th ...
+                    
+                    </div>
+                    <a class="more" href="/kotlin-vs-java/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/kotlin–collections/">Kotlin – Collections</a>
+                    </h2>
+                    <p class="article-date">May 17, 2018</p>
+                    
+                    
+  <a href="/tags#kotlin">
+    <span class="tag-code">kotlin</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Collections là gì? Theo Google dịch thì nó là “bộ sưu tập”, mình hiểu nó là 1 kiểu tập hợp các phần tử có cùng kiểu dữ liệu hoặc không (mảng, danh ...
+                    
+                    </div>
+                    <a class="more" href="/kotlin–collections/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/php-print-va-echo/">PHP – "print" và "echo"</a>
+                    </h2>
+                    <p class="article-date">June 5, 2016</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Trong ngôn ngữ PHP, ta luôn biết lệnh “echo” dùng để xuất giá trị của 1 biến từ sever lên trình duyệt. Đó có thể là 1 số, chuỗi, mảng, nội dung ht ...
+                    
+                    </div>
+                    <a class="more" href="/php-print-va-echo/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/php-form/">PHP – Form</a>
+                    </h2>
+                    <p class="article-date">November 28, 2016</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Sau khi dùng form HTML để nhập liệu các thông tin, PHP sẽ xử lý các dữ liệu đó.
+Thẻ form trong HTML có cú pháp như sau:
+1&lt;form action="xuly.php ...
+                    
+                    </div>
+                    <a class="more" href="/php-form/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/php-xu-ly-mang/">PHP – Xử lý mảng</a>
+                    </h2>
+                    <p class="article-date">March 28, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Ta sẽ đi vào ví dụ cụ thể để hiểu rõ hơn về xử lý mảng trong ngôn ngữ PHP.
+Mảng tuần tựLuôn bắt đầu từ con số 0, tăng dần:
+12$a=array("5","20","10 ...
+                    
+                    </div>
+                    <a class="more" href="/php-xu-ly-mang/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/php–cookie-va-session/">PHP – Cookie và Session</a>
+                    </h2>
+                    <p class="article-date">May 17, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        CookieKhái niêm: Là những tập tin được lưu trên máy tính, được tạo bởi website đã truy cập thông qua trình duyệt, thông tin được lưu có thể là tên ...
+                    
+                    </div>
+                    <a class="more" href="/php–cookie-va-session/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/php–xu-ly-json/">PHP – Xử lý JSON</a>
+                    </h2>
+                    <p class="article-date">October 25, 2017</p>
+                    
+                    
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+  <a href="/tags#json">
+    <span class="tag-code">json</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        JSON (JavaScript Object Noattion) là 1 kiểu dữ liệu dạng text thuần, dạng dữ liệu kiểu key và value, được dùng trong NoSQL Database, được hầu hết  ...
+                    
+                    </div>
+                    <a class="more" href="/php–xu-ly-json/">Read more</a>
+                </article>
+            
+        
+            
+                    <article class="article-card">
+                    <h2 class="article-head">
+                    <a href="/android-retrofit/">Android – Retrofit</a>
+                    </h2>
+                    <p class="article-date">March 13, 2019</p>
+                    
+                    
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+                    
+
+                    <div class="article-summary">
+                    
+                        Giới thiệuRetrofit là thư viện được viết bằng Java, mục đích để dễ dàng gửi Request HTTP, HTTPS lên Server. 
+Hỗ trợ phương thức POST, GET, PUT, DE ...
+                    
+                    </div>
+                    <a class="more" href="/android-retrofit/">Read more</a>
+                </article>
+            
+        
+      
+        
+      </main>
+      
+      
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

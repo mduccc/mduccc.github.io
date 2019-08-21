@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Android – Swipe item trong RecylerView | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android – Swipe item trong RecylerView</h2>
+  <p class="post-date">2019-06-29</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>Mọi người đã quá quen thuộc với việc swipe để xóa tin nhắn trong các ứng dụng nhắn tin, bài viết này sẽ hướng dẫn cách chúng ta swipe, tạo button và bắt sự kiện trong mỗi item của <code>RecyclerView</code>.</p>
+<h3 id="Hoat-dong-nhu-the-nao"><a href="#Hoat-dong-nhu-the-nao" class="headerlink" title="Hoạt động như thế nào"></a>Hoạt động như thế nào</h3><ol>
+<li>Sử dụng animation cho swipe mỗi item</li>
+<li>Dùng ItemTouchHelper cho việc vẽ, swipe back,  bắt sự kiện nút Button</li>
+</ol>
+<p><br></p>
+<h3 id="Trien-khai"><a href="#Trien-khai" class="headerlink" title="Triển khai"></a>Triển khai</h3><h5 id="Set-Animation-cho-moi-item"><a href="#Set-Animation-cho-moi-item" class="headerlink" title="Set Animation cho mỗi item"></a>Set Animation cho mỗi item</h5><p>Trong Adapter, ta swipe cho mỗi item từ phải sang trái bằng cách dùng <code>AnimationUtils</code>.<br>Nếu không muốn swipe từ phải sang trái, xem tại <a href="https://developer.android.com/reference/android/view/animation/AnimationUtils.html#loadAnimation(android.content.Context,%20int)" target="_blank" rel="noopener">đây</a>.</p>
+<script src="https://gist.github.com/mduccc/8eb97c8be431a1138199422a2cb1af49.js"></script>
+
+<p>Item sẽ được swipe, nhưng sẽ mất khỏi màn hình, không thể swipe back. Ta sẽ giải quyết vấn đề này ở bước tiếp theo.<br><br></p>
+<h5 id="Swipe-back-tao-button"><a href="#Swipe-back-tao-button" class="headerlink" title="Swipe back, tạo button"></a>Swipe back, tạo button</h5><p>Ta cần 1 điểm cho item dừng lại, mình sẽ dùng <code>ItemTouchHelper</code> để bắt vị trí item chạy và cho nó dừng lại.</p>
+<p>Attach tới 1 <code>RecyclerView</code> qua id của view.</p>
+<script src="https://gist.github.com/mduccc/4828b4e3e6f98293a8fa473a6fa68486.js"></script>
+
+<p><code>swipeController</code> chứa một class xử lý khi swipe</p>
+<script src="https://gist.github.com/mduccc/4e63129d67f4324590157592995cf7d1.js"></script>   
+
+<p><code>*</code> <code>onMove</code>: Phương thức này được gọi khi item đang swipe<br><code>*</code> <code>onSwiped</code>: Được gọi khi item đã swipe xong<br><code>*</code> <code>onChildDraw</code>: Được gọi khi item đang swipe và cả swipe xong. Đây là nơi ta sẽ vẽ button và bắt sự kiện<br><code>*</code> <code>getMovementFlags</code>: Cấu hình swipe back: START, END, TOP, DOWN<br>Ta đã cấu hình swipe back cho item.<br><br><br>Sau khi item đã swipe và dừng lại, nó cần để lộ 1 button hiện ra. Button Xóa chẳng hạn. Ta đi vẽ nó.</p>
+<script src="https://gist.github.com/mduccc/c844e0be5c0de66666091d41b54c7ea4.js"></script>
+
+<p>Nó sẽ giống như này:<br><img src="https://i.imgur.com/W6ZFMHn.png"><br><br></p>
+<h5 id="Bat-su-kien-cho-button"><a href="#Bat-su-kien-cho-button" class="headerlink" title="Bắt sự kiện cho button"></a>Bắt sự kiện cho button</h5><p>Button do ta tự vẽ ra, không có phương thức bắt sự kiện như button của Android. Do vậy ta sẽ tự build sự kiện click cho button ta vẽ.</p>
+<p>Với tư tưởng bắt tọa độ ngón tay chạm vào RecyclerView trên màn hình, nếu button đang hiện ra và tọa độ chạm nằm trong tọa độ của 4 cạnh button đó -&gt; button tại item đó được click. </p>
+<p>Chúng ta sẽ chỉ cho swipe 1 item tại 1 thời điểm, khi swipe item này, item đã swipe trước đó sẽ phải đóng lại.</p>
+<p>Đi bắt sự kiện.     </p>
+<script src="https://gist.github.com/mduccc/1b917ea189d2a6bc7554b3f8f7c964a8.js"></script> 
+
+<p>Vậy là đã xong. Mình có viết một project mẫu tại <a href="https://github.com/mduccc/recycler_view_swipe_example" target="_blank" rel="noopener">đây</a>. </p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/android-recyclerview/">
+        <span class="nav-arrow">← </span>
+        
+          Android – RecylerView
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/i++ vs ++i/">
+        
+          ++i vs i++
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Hoat-dong-nhu-the-nao"><span class="toc-nav-text">Hoạt động như thế nào</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Trien-khai"><span class="toc-nav-text">Triển khai</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Set-Animation-cho-moi-item"><span class="toc-nav-text">Set Animation cho mỗi item</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Swipe-back-tao-button"><span class="toc-nav-text">Swipe back, tạo button</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Bat-su-kien-cho-button"><span class="toc-nav-text">Bắt sự kiện cho button</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/android-recycler-view-swipe/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android – Swipe item trong RecylerView",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/android-recycler-view-swipe/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

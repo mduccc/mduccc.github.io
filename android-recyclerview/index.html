@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Android – RecylerView | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android – RecylerView</h2>
+  <p class="post-date">2019-04-01</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="Gioi-thieu"><a href="#Gioi-thieu" class="headerlink" title="Giới thiệu"></a>Giới thiệu</h3><p><code>RecyclerView</code> là một <code>ViewGroup</code>, tương tự như <code>ListView</code>, nhưng nó được xây dựng để cho lập trình viên có thể kiểm soát, tùy chỉnh sâu hơn, hiệu suất cao hơn <code>ListView</code>. </p>
+<h3 id="Dac-trung"><a href="#Dac-trung" class="headerlink" title="Đặc trưng"></a>Đặc trưng</h3><p><code>*</code> Cần một <code>LayoutManager</code> riêng, do đó <code>RecyclerView</code> có thể giống như <code>ListView</code>,<code>*</code> <code>GirdView</code>, cuộn ngang, dọc.<br><code>*</code> Sử dụng một <code>ViewHolder</code> để tái sử dụng View, tránh tạo ra View mới. Do vậy khi danh dách các Item rất nhiều thì cuộn vẫn rất mượt.<br><code>*</code> Hỗ trợ Animation tốt hơn <code>ListView</code>.<br><code>*</code> Không hỗ trợ <code>setOnItemClick</code> hay <code>setOnItemLongCLick</code>, lập trình viên phải tự custom</p>
+<h3 id="Su-dung"><a href="#Su-dung" class="headerlink" title="Sử dụng"></a>Sử dụng</h3><p>Import thư viện cần thiết:<br><code>implementation &#39;com.android.support:recyclerview-v7:28.0.0&#39;</code></p>
+<p>Chúng ta sẽ đi xây dựng 1 ứng dụng hiển thị danh sách các liên lạc:<br><code>*</code> Tên<br><code>*</code> Số điện thoại<br><code>*</code> Email</p>
+<h5 id="Xay-dung-Layout"><a href="#Xay-dung-Layout" class="headerlink" title="Xây dựng Layout"></a>Xây dựng Layout</h5><p>activity_main.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;LinearLayout</span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span></span><br><span class="line">        tools:context=<span class="string">".MainActivity"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;fragment</span><br><span class="line">            android:id=<span class="string">"@+id/contacts_fragment"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            class=<span class="string">"com.learn.recyclerview_example.ContactsFragment"</span>/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/FxQv6pV.png"></p>
+<p>fragment_contacts.xml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;LinearLayout</span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:tools=<span class="string">"http://schemas.android.com/tools"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:orientation=<span class="string">"vertical"</span></span><br><span class="line">        tools:context=<span class="string">".ContactsFragment"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.RecyclerView</span><br><span class="line">            android:id=<span class="string">"@+id/recycler_view"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/feKoCNE.png"></p>
+<p>item_layout.xml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;LinearLayout</span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:orientation=<span class="string">"horizontal"</span></span><br><span class="line">        android:paddingLeft=<span class="string">"15dp"</span></span><br><span class="line">        android:paddingRight=<span class="string">"15dp"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"10dp"</span></span><br><span class="line">        android:layout_marginTop=<span class="string">"5dp"</span></span><br><span class="line">        android:id=<span class="string">"@+id/item_layout"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">            android:id=<span class="string">"@+id/image_avatar"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_weight=<span class="string">"1"</span></span><br><span class="line">            android:src=<span class="string">"@drawable/ic_account"</span></span><br><span class="line">            android:scaleType=<span class="string">"fitCenter"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;LinearLayout</span><br><span class="line">            android:id=<span class="string">"@+id/info"</span></span><br><span class="line">            android:layout_width=<span class="string">"0dp"</span></span><br><span class="line">            android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">            android:layout_weight=<span class="string">"4"</span></span><br><span class="line">            android:orientation=<span class="string">"vertical"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">                android:id=<span class="string">"@+id/name"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">                android:text=<span class="string">"Name: "</span></span><br><span class="line">                android:textColor=<span class="string">"@color/colorBlack"</span></span><br><span class="line">                android:textSize=<span class="string">"20sp"</span></span><br><span class="line">                android:textStyle=<span class="string">"bold"</span>/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">                android:id=<span class="string">"@+id/phone_number"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">                android:text=<span class="string">"Number: "</span></span><br><span class="line">                android:textSize=<span class="string">"17sp"</span>/&gt;</span><br><span class="line"></span><br><span class="line">        &lt;TextView</span><br><span class="line">                android:id=<span class="string">"@+id/email"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">                android:text=<span class="string">"Email: "</span></span><br><span class="line">                android:textSize=<span class="string">"17sp"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/LinearLayout&gt;</span><br><span class="line"></span><br><span class="line">&lt;/LinearLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://i.imgur.com/DvEAhJO.png"></p>
+<h5 id="Data-collection"><a href="#Data-collection" class="headerlink" title="Data collection"></a>Data collection</h5><p>ContactCollection.kt<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class ContactCollection (val name: String, val phoneNumber: String, val email: String)</span><br></pre></td></tr></table></figure></p>
+<h5 id="Xay-dung-interface-cho-event-click"><a href="#Xay-dung-interface-cho-event-click" class="headerlink" title="Xây dựng interface cho event click"></a>Xây dựng interface cho event click</h5><p>OnClickListener.kt</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface OnClickListener &#123;</span><br><span class="line">    fun OnItemClick(position: Int)</span><br><span class="line">    fun onItemLongClick(position: Int)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Định nghĩa hành động xẩy ra khi click</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">private val onClickListener = object : OnClickListener &#123;</span><br><span class="line">        override fun onItemClick(position: Int) &#123;</span><br><span class="line">            requireActivity().runOnUiThread &#123;</span><br><span class="line">                Toast.makeText(requireActivity(), <span class="string">"Clicked on "</span> + listContacts[position].name, Toast.LENGTH_SHORT).show()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        override fun onItemLongClick(position: Int) &#123;</span><br><span class="line">            requireActivity().runOnUiThread &#123;</span><br><span class="line">                Toast.makeText(requireActivity(), <span class="string">"Long clicked on "</span> + listContacts[position].name, Toast.LENGTH_SHORT).show()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Adapter"><a href="#Adapter" class="headerlink" title="Adapter"></a>Adapter</h5><p><code>*</code> <code>onCreateViewHolder</code>: Nạp Layout cần hiện thị cho 1 item, trả về 1 View<br><code>*</code> <code>MyViewHolder</code>: Lớp quản nắm giữ View<br><code>*</code> <code>getItemCount</code>: Trả về kích cỡ dữ liệu, cũng là kích cỡ của RecyclerView<br><code>*</code> <code>onBindViewHolder</code>: Bind data tới View, hành động với View ở đây.</p>
+<p>RecyclerViewAdapter.kt<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class RecyclerViewAdapter(private val context: Context, private val listContacts: ArrayList&lt;ContactCollection&gt;, private val onClickListener: OnClickListener)</span><br><span class="line">    : RecyclerView.Adapter&lt;RecyclerViewAdapter.MyViewHolder&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): MyViewHolder &#123;</span><br><span class="line">        val inflater = LayoutInflater.from(context)</span><br><span class="line"></span><br><span class="line">        val view = inflater.inflate(R.layout.item_layout, p0, <span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> MyViewHolder(view)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun getItemCount(): Int &#123;</span><br><span class="line">        <span class="built_in">return</span> listContacts.size</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onBindViewHolder(p0: MyViewHolder, p1: Int) &#123;</span><br><span class="line">        val view = p0.itemView</span><br><span class="line">        val contact = listContacts[p1]</span><br><span class="line"></span><br><span class="line">        // Set Data to View</span><br><span class="line">        view.apply &#123;</span><br><span class="line">            name.text = contact.name</span><br><span class="line">            phone_number.text = contact.phoneNumber</span><br><span class="line">            email.text = contact.email</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Event click</span><br><span class="line">        view.setOnClickListener &#123;</span><br><span class="line">            onClickListener.OnItemClick(p1)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        view.setOnLongClickListener &#123;</span><br><span class="line">            onClickListener.onItemLongClick(p1)</span><br><span class="line">            <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    inner class MyViewHolder(view: View): RecyclerView.ViewHolder(view)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/android-retrofit/">
+        <span class="nav-arrow">← </span>
+        
+          Android – Retrofit
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/android-recycler-view-swipe/">
+        
+          Android – Swipe item trong RecylerView
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Gioi-thieu"><span class="toc-nav-text">Giới thiệu</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Dac-trung"><span class="toc-nav-text">Đặc trưng</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Su-dung"><span class="toc-nav-text">Sử dụng</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Xay-dung-Layout"><span class="toc-nav-text">Xây dựng Layout</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Data-collection"><span class="toc-nav-text">Data collection</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Xay-dung-interface-cho-event-click"><span class="toc-nav-text">Xây dựng interface cho event click</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Adapter"><span class="toc-nav-text">Adapter</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/android-recyclerview/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android – RecylerView",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/android-recyclerview/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

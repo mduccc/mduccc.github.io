@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      PHP – Viết Chatbot Facebook | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>PHP – Viết Chatbot Facebook</h2>
+  <p class="post-date">2017-11-23</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>Dạo đây mình có hứng thú tìm hiểu về Chatbot và có viết 1 con để thư giãn bằng PHP, nay xin chia sẻ lại cho mọi người .<br><br></p>
+<h3 id="Co-che-hoat-dong"><a href="#Co-che-hoat-dong" class="headerlink" title="Cơ chế hoạt động"></a>Cơ chế hoạt động</h3><p>Để người dùng và page giao tiếp được với nhau, ta cần 1 Webhooks. Hiểu đơn giản Webhooks là cầu nối trung gian giữa người dùng và page, nếu người dùng gửi tới page ‘đang xem phim hả’, thì tin nhắn đó sẽ được chuyển tới Webhooks và nó kiểm tra điều kiện, sau đó gửi nội dung tin nhắn trả lời ‘Phim gì?’ cho page qua một API, page gửi lại cho người dùng.<br><img src="https://i.imgur.com/44ofSTx.jpg"></p>
+<h3 id="Viet-Webhooks"><a href="#Viet-Webhooks" class="headerlink" title="Viết Webhooks"></a>Viết Webhooks</h3><p>Viết code cấu hình Webhooks:</p>
+<p>Mình đặt tên là boot.php</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(<span class="string">'Content-Type: text/html; charset=utf-8'</span>);</span><br><span class="line"><span class="keyword">if</span>(isset(<span class="variable">$_GET</span>[<span class="string">'hub_verify_token'</span>]))&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="variable">$_GET</span>[<span class="string">'hub_verify_token'</span>] === <span class="string">'123456789'</span>)&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$_GET</span>[<span class="string">'hub_challenge'</span>];</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">'Invalid Verify Token'</span>;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>$_GET[‘hub_verify_token’]</code> là tùy ý đặt</p>
+<h3 id="Viet-xu-ly-tin-nhan"><a href="#Viet-xu-ly-tin-nhan" class="headerlink" title="Viết xử lý tin nhắn"></a>Viết xử lý tin nhắn</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$input</span> = json_decode(file_get_contents(<span class="string">'php://input'</span>), <span class="literal">true</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span>(isset(<span class="variable">$input</span>[<span class="string">'entry'</span>][0][<span class="string">'messaging'</span>][0][<span class="string">'sender'</span>][<span class="string">'id'</span>]))&#123;</span><br><span class="line"> </span><br><span class="line">  <span class="variable">$sender</span> = <span class="variable">$input</span>[<span class="string">'entry'</span>][0][<span class="string">'messaging'</span>][0][<span class="string">'sender'</span>][<span class="string">'id'</span>];</span><br><span class="line">  <span class="variable">$message</span> = <span class="variable">$input</span>[<span class="string">'entry'</span>][0][<span class="string">'messaging'</span>][0][<span class="string">'message'</span>][<span class="string">'text'</span>];</span><br><span class="line"> </span><br><span class="line">  <span class="variable">$url</span> = <span class="string">'https://graph.facebook.com/v2.6/me/messages?access_token=&lt;mã_token&gt;'</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="variable">$ch</span> = curl_init(<span class="variable">$url</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="variable">$jsonData</span> = <span class="string">'&#123;</span></span><br><span class="line"><span class="string">      "recipient":&#123;</span></span><br><span class="line"><span class="string">      "id":"'</span> . <span class="variable">$sender</span> . <span class="string">'"</span></span><br><span class="line"><span class="string">    &#125;,'</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="variable">$message_chuan_hoa</span> = mb_strtolower(<span class="variable">$message</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">if</span>(strpos(<span class="variable">$message_chuan_hoa</span>, <span class="string">'xin chào'</span>) !== <span class="literal">false</span> || strpos(<span class="variable">$message_chuan_hoa</span>, <span class="string">'chào'</span>) !== <span class="literal">false</span> )&#123;</span><br><span class="line">    <span class="variable">$jsonData</span>.= <span class="string">'"message":&#123;</span></span><br><span class="line"><span class="string">        "text":"Chào anh!"</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  curl_setopt(<span class="variable">$ch</span>, CURLOPT_POST, 1);</span><br><span class="line">  curl_setopt(<span class="variable">$ch</span>, CURLOPT_POSTFIELDS, <span class="variable">$jsonData</span>);</span><br><span class="line">  curl_setopt(<span class="variable">$ch</span>, CURLOPT_HTTPHEADER, array(<span class="string">'Content-Type: application/json'</span>));</span><br><span class="line">   </span><br><span class="line">  <span class="keyword">if</span>(!empty(<span class="variable">$message</span>))&#123;</span><br><span class="line">    <span class="variable">$result</span> = curl_exec(<span class="variable">$ch</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>php://input trả về dữ liệu thô trong header, ở đây là dạng json. Sau đó đọc ID và nội dung tin nhắn của người dùng lưu vào biến <code>$sender</code> và <code>$message</code>. Dùng hàm <code>mb_strtolower()</code> chuẩn hóa tin nhắn của người dùng từ chữ hoa thành chữ thường để dễ so sánh.<br><br></p>
+<p>Biến <code>$jsonData</code> lưu tin nhắn cần gửi lại người dùng, các trường:</p>
+<p><code>*</code> <code>recipient</code> : Người nhận tin nhắn, với id người nhận lưu trong key id<br><code>*</code> <code>message</code> : Nội dung tin nhắn cần gửi, với key text là tin nhắn dạng text (văn bản thuần)<br><br></p>
+<p>Dùng curl để gửi kèm tin nhắn <code>$jsonData</code> dạng json với phương thức post khi gọi API, nếu thành công thì người dùng sẽ nhận được tin nhắn từ page.<br><br></p>
+<h3 id="Cau-hinh-ung-dung"><a href="#Cau-hinh-ung-dung" class="headerlink" title="Cấu hình ứng dụng"></a>Cấu hình ứng dụng</h3><p>Bạn cần phải có một ứng dụng Facebook, bạn có thể tạo một ứng dụng tại đây <a href="https://developers.facebook.com" target="_blank" rel="noopener">https://developers.facebook.com</a><br><br></p>
+<p>Sau đó nhấn chọn “thêm sản phẩm” và thêm Messenger.<br><br></p>
+<p><b>Thiết lập token:<b></b></b></p>
+<p>Chọn page cần áp dụng, nhớ dán mã truy cập trang vào &lt;mã_token&gt; trong biến $url ở Webhooks viết bên trên<br><img src="https://i.imgur.com/4JxEGxK.png"></p>
+<p><b>Thiết lập Webhooks:</b></p>
+<p>Thực ra mình đã thiết lập Webhooks xong từ trước rồi, nhưng mọi người có thể nhấn vào “thiết lập webhooks” điền theo như hình dưới.<br><br></p>
+<p>Mã xác minh nhập trùng với <code>$_GET[‘hub_verify_token’]</code> trong Webhooks viết ở bên trên.<br><br></p>
+<p>URL gọi lại là đường dẫn tới Webhooks, lưu ý là URL phải có chứng chỉ https mới được facebook chấp nhận, trong hình là đường dẫn của mình.<br><br></p>
+<p>Các trường gửi thì chỉ cần những quyền như mình tích ở ảnh là được, không thì tùy theo nhu cầu của bạn.<br><img src="https://i.imgur.com/YUBqmsS.png"></p>
+<p>Nhấn “xác minh và lưu”, thành công được như hình dưới.</p>
+<p>Không được quên chọn đăng ký page.<br><img src="https://i.imgur.com/IRAMBGn.png"></p>
+<p>Bây giờ mình sẽ gửi tin nhắn “xin chào” cho page:</p>
+<p>Page trả lời “Chào anh”<br><img src="https://i.imgur.com/xOD2CAJ.png"></p>
+<p>Viết thêm vài dòng code:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(strpos(<span class="variable">$message_chuan_hoa</span>, <span class="string">'đang làm gì'</span>) !== <span class="literal">false</span> )&#123;</span><br><span class="line">  <span class="variable">$jsonData</span>.= <span class="string">'"message":&#123;</span></span><br><span class="line"><span class="string">      "text":"EM không biết! anh đoán đi :p!"</span></span><br><span class="line"><span class="string">    &#125;  </span></span><br><span class="line"><span class="string">  &#125;'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(strpos(<span class="variable">$message_chuan_hoa</span>, <span class="string">'phim'</span>) !== <span class="literal">false</span> )&#123;</span><br><span class="line">  <span class="variable">$jsonData</span>.= <span class="string">'"message":&#123;</span></span><br><span class="line"><span class="string">      "text":"Phim gì?"</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/sidj44H.png"><br>Vậy là Ok.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+  <a href="/tags#chatbot">
+    <span class="tag-code">chatbot</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/php–xu-ly-json/">
+        <span class="nav-arrow">← </span>
+        
+          PHP – Xử lý JSON
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/kotlin-vs-java/">
+        
+          Kotlin với Java
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Co-che-hoat-dong"><span class="toc-nav-text">Cơ chế hoạt động</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Viet-Webhooks"><span class="toc-nav-text">Viết Webhooks</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Viet-xu-ly-tin-nhan"><span class="toc-nav-text">Viết xử lý tin nhắn</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cau-hinh-ung-dung"><span class="toc-nav-text">Cấu hình ứng dụng</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/facebook-chatbot/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "PHP – Viết Chatbot Facebook",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/facebook-chatbot/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

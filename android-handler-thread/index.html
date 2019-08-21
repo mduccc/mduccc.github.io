@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      Android – HandlerThread | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Android – HandlerThread</h2>
+  <p class="post-date">2018-09-26</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="Ly-do"><a href="#Ly-do" class="headerlink" title="Lý do"></a>Lý do</h3><p>Để biết lý do vì sao dùng <code>HandlerThread</code>, ta đi so sánh <code>Thread</code> với <code>HandlerThread</code>. </p>
+<p><code>*</code> <code>Thread</code>: Khi sử dụng Thread, ta chỉ có thể tạo một instance <code>Thread</code> va chạy nó, nếu muốn chạy nhiều tác vụ, sẽ phải tạo nhiều instance <code>Thread</code> và quá nhiều <code>Thread</code> cùng chạy thì có khả năng ứng dụng sẽ load chậm, vì cpu bị quá tải số luồng có thể xử lý.<br><code>*</code> <code>HandlerThread</code>: Khắc phục nhược điểm của <code>Thread</code>, có thể tái sử dụng <code>Thread</code> để tránh gây quá tải <code>Thread</code>.</p>
+<h3 id="Cach-hoat-dong"><a href="#Cach-hoat-dong" class="headerlink" title="Cách hoạt động"></a>Cách hoạt động</h3><p>Ta sẽ có một hàng đợi các <code>Task</code>, một <code>Looper</code>, một <code>Thread</code>. <code>Looper</code> sẽ giữ cho <code>Thread</code> sống và nó sẽ chạy lần lượt qua các <code>Task</code> trong hàng đợi, <code>Task</code> nào được chạy đến thì thực thi <code>Task</code> đó trong <code>Thread</code> và xóa <code>Task</code> đó khỏi hàng đợi, hết <code>Task</code> này thì đến <code>Task</code> khác.    </p>
+<p><u>Chú ý</u>:<br><code>*</code> <code>Task</code> mà nói ở trên là nhiệm vụ cần thực hiện, nói dễ hơn là đoạn code cần chạy.<br><code>*</code> Cần giải phóng <code>Thread</code> vào lúc thích hợp, chẳng hạn như đóng ứng dụng hoặc không thì <code>Thread</code> sẽ chạy mãi mãi.</p>
+<h3 id="Tao-HandlerThread"><a href="#Tao-HandlerThread" class="headerlink" title="Tạo HandlerThread"></a>Tạo HandlerThread</h3><p>Trong quá trình học, mình thấy có nhiều cách để tạo và sử dụng <code>HandlerThread</code>, nhưng có một cách mình rất thích vì nó đơn giản và ngắn ngọn, chính là cách này:</p>
+<p>Khi <code>Looper gặp</code>Task` đó nó sẽ được thực thi.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val handlerThread = HandlerThread(<span class="string">"handlerThread"</span>)</span><br><span class="line">handlerThread.start()</span><br><span class="line">val handler = Handler(handlerThread.looper)</span><br></pre></td></tr></table></figure>
+<p><code>*</code> <code>HandlerThread()</code> là một <code>class</code> base từ  <code>Thread()</code>, nhưng nó có phương thức <code>looper</code>, chứa hàng đợi <code>Task</code> .<br><code>*</code> <code>Handler</code> là một <code>class</code> có nhiệm vụ gửi các <code>Task</code> tới hàng đợi <code>Task</code> của <code>Thread</code> từ <code>Thread</code> khác (<code>UI Thread</code> chẳng hạn)</p>
+<h3 id="Post-mot-Task-toi-hang-doi"><a href="#Post-mot-Task-toi-hang-doi" class="headerlink" title="Post một Task tới hàng đợi"></a>Post một Task tới hàng đợi</h3><p>Để post một <code>Task</code> tới hàng đợi, chỉ việc:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">handler.post&#123;</span><br><span class="line">    // code here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Giai-phong-Thread"><a href="#Giai-phong-Thread" class="headerlink" title="Giải phóng Thread"></a>Giải phóng Thread</h3><p>Để giải phóng <code>Thread</code>, chỉ việc:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">handler.removeCallbacks(handlerThread)</span><br><span class="line">handlerThread.quit()</span><br></pre></td></tr></table></figure>
+<h3 id="Viet-App"><a href="#Viet-App" class="headerlink" title="Viết App"></a>Viết App</h3><p>Một app đơn giản sử dụng <code>HandlerThread</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">class MainActivity : <span class="function"><span class="title">AppCompatActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    private lateinit var handlerThread: HandlerThread</span><br><span class="line">    private lateinit var handler: Handler</span><br><span class="line">    private var resumeCountLoad = 0</span><br><span class="line"></span><br><span class="line">    private fun <span class="function"><span class="title">startHandlerThread</span></span>()&#123;</span><br><span class="line">        handlerThread = HandlerThread(<span class="string">"handlerThread"</span>)</span><br><span class="line">        handlerThread.start()</span><br><span class="line">        handler = Handler(handlerThread.looper)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private fun <span class="function"><span class="title">cancelHandlerThread</span></span>()&#123;</span><br><span class="line">        handler.removeCallbacks(handlerThread)</span><br><span class="line">        handlerThread.quit()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private fun <span class="function"><span class="title">postTaskToHandlerThread</span></span>()&#123;</span><br><span class="line">        handler.post&#123;</span><br><span class="line">            runOnUiThread &#123;</span><br><span class="line">                Toast.makeText(this, <span class="string">"First post from HandlerThread"</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        handler.post&#123;</span><br><span class="line">            val length = 3000000000</span><br><span class="line">            <span class="keyword">for</span> (i <span class="keyword">in</span> 0 until length)&#123;</span><br><span class="line">                <span class="keyword">if</span> (i == length-1)&#123;</span><br><span class="line">                    runOnUiThread &#123;</span><br><span class="line">                        text_view.text = <span class="string">"Loaded"</span>  /* text_view is a Id */</span><br><span class="line">                        Toast.makeText(this, <span class="string">"Second post from HandlerThread"</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun <span class="function"><span class="title">onResume</span></span>() &#123;</span><br><span class="line">        super.onResume()</span><br><span class="line">        resumeCountLoad++</span><br><span class="line">        <span class="keyword">if</span> (resumeCountLoad &gt; 1)</span><br><span class="line">            startHandlerThread()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun <span class="function"><span class="title">onPause</span></span>() &#123;</span><br><span class="line">        super.onPause()</span><br><span class="line">        cancelHandlerThread()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState)</span><br><span class="line">        setContentView(R.layout.activity_main)</span><br><span class="line">        startHandlerThread()</span><br><span class="line">        postTaskToHandlerThread()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/3aKIgzH.gif" width="30%"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#android">
+    <span class="tag-code">android</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/android-thread/">
+        <span class="nav-arrow">← </span>
+        
+          Android - Theard
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/android-retrofit/">
+        
+          Android – Retrofit
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Ly-do"><span class="toc-nav-text">Lý do</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cach-hoat-dong"><span class="toc-nav-text">Cách hoạt động</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Tao-HandlerThread"><span class="toc-nav-text">Tạo HandlerThread</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Post-mot-Task-toi-hang-doi"><span class="toc-nav-text">Post một Task tới hàng đợi</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Giai-phong-Thread"><span class="toc-nav-text">Giải phóng Thread</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Viet-App"><span class="toc-nav-text">Viết App</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/android-handler-thread/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Android – HandlerThread",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/android-handler-thread/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

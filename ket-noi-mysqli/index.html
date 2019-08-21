@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="mducc blog">
+  <meta name="keyword" content="mducc, blog">
+  
+    <link rel="shortcut icon" href="/css/images/Octocat.png">
+  
+  <title>
+    
+      PHP – Cơ sở dữ liệu Mysqli | Diary of Duc
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js rel=" stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/Octocat.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!---<div class="logo"><img src="http://i.imgur.com/ZM2L83y.jpg" width="40px" height="40px"></div> -->
+      <span>Diary of Duc</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>PHP – Cơ sở dữ liệu Mysqli</h2>
+  <p class="post-date">2017-09-22</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>Là ngôn ngữ lập trình Backend nền Web, PHP hiển nhiên phải hỗ trợ kết nối tới cơ sở dữ liệu, lập trình viên PHP sẽ vô dụng nếu không biết cách tương tác với cơ sở dữ liệu.<br><br></p>
+<p>PHP cung cấp thư viện MYSQLi và PDO, MYSQLi chỉ kết nối được với MYSQL Database (Bài viết bên dưới), PDO hỗ trợ nhiều loại database (Khi nào có dịp mình sẽ viết bài chi tiết về loại này).<br><br></p>
+<p>Với MYSQLi, bài viết sử dụng phương pháp hướng đối tượng để kết nối và tương tác đến cơ sở dữ liệu (database).<br><br></p>
+<h3 id="Ket-noi-toi-1-database"><a href="#Ket-noi-toi-1-database" class="headerlink" title="Kết nối tới 1 database"></a>Kết nối tới 1 database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span> = new mysqli(<span class="string">'localhost'</span>, <span class="string">'root'</span>,<span class="string">''</span>, <span class="string">'mysqli'</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p><code>*</code> <code>localhost</code>: hostname sever. //thường mặc định là localhost<br><code>*</code> <code>root</code>: tên của người dùng database. //tùy chỉnh<br><code>*</code> <code>&#39;&#39;</code>: mật khẩu của database, của mình không cài mật khẩu nên để trống. //tùy chỉnh<br><code>*</code> <code>mysqli</code>: đây là tên database. //tùy chỉnh<br><br></p>
+<h3 id="Tao-bang"><a href="#Tao-bang" class="headerlink" title="Tạo bảng"></a>Tạo bảng</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span>-&gt;query(<span class="string">"CREATE TABLE users (</span></span><br><span class="line"><span class="string">		id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">		username varchar(30),</span></span><br><span class="line"><span class="string">		password varchar(45),</span></span><br><span class="line"><span class="string">		sex int(1),</span></span><br><span class="line"><span class="string">		phone int(20),</span></span><br><span class="line"><span class="string">		country varchar(50),</span></span><br><span class="line"><span class="string">		primary key(id)</span></span><br><span class="line"><span class="string">	)"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Gọi tới phương thức query với tham số truyền vào <code>CREATE TABLE users (
+id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+username varchar(30),
+password varchar(45),
+sex int(1),
+phone int(20),
+country varchar(50),
+primary key(id)
+)</code> sẽ tạo ra 1 bảng mới tên “users” và khởi tạo các trường trong nó.<br><br></p>
+<h3 id="Them-du-lieu-vao-database"><a href="#Them-du-lieu-vao-database" class="headerlink" title="Thêm dữ liệu vào database"></a>Thêm dữ liệu vào database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span>-&gt;query(<span class="string">"INSERT INTO users(username, password, sex, phone, country) VALUES('Trang', '18b73acaee627c438c7e73ab32618e5c97065578', '0', '01671245299', 'VietNam')"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Gọi tới phương thức query với tham số truyền vào <code>INSERT INTO users(username, password, sex, phone, country) VALUES(‘Trang’, ’18b73acaee627c438c7e73ab32618e5c97065578′, ‘0’, ‘01671245299’, ‘VietNam’)</code> sẽ thêm mới dữ liệu trong “VALUES”  tương ứng với từng cột trong bảng “users” vừa tạo.<br><br></p>
+<p>Truy vấn database</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span>-&gt;query(<span class="string">"SELECT * FROM users WHERE sex = 1"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Gọi tới phương thức query với tham số truyền vào <code>SELECT * FROM users WHERE sex = 1</code> sẽ lọc ra tất cả dữ liệu trong bảng “user” với giới tính là nam (sex = 1).<br><br></p>
+<h3 id="Them-1-cot"><a href="#Them-1-cot" class="headerlink" title="Thêm 1 cột"></a>Thêm 1 cột</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span>-&gt;query(<span class="string">"ALTER TABLE users ADD verification int(1)"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Tương tự như những câu truy vấn trên ,tham số truyền vào <code>ALTER TABLE users ADD verification int(1)</code> sẽ tạo 1 cột tên “verification” có kiểu int trong bảng “users”.<br><br></p>
+<h3 id="Cap-nhat-du-lieu-trong-database"><a href="#Cap-nhat-du-lieu-trong-database" class="headerlink" title="Cập nhật dữ liệu trong database"></a>Cập nhật dữ liệu trong database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query(<span class="string">"UPDATE users SET verification = 1 WHERE verification IS NULL"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Truyền vào tham số <code>UPDATE users SET verification = 1 WHERE verification IS NULL</code> sẽ cập nhật tất cả giá trị trong cột “verification” thành “1” nếu nó “NULL” (rỗng) trong bảng “users”.<br><br></p>
+<h3 id="Xoa-gia-tri-trong-database"><a href="#Xoa-gia-tri-trong-database" class="headerlink" title="Xóa giá trị trong database"></a>Xóa giá trị trong database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$con</span>-&gt;query(<span class="string">"DELETE FROM users WHERE id = 8"</span>);</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p>Truyền vào tham số <code>DELETE FROM users WHERE id = 8</code> để xóa toàn bộ thông tin của một dòng có “id=8”.<br><br></p>
+<h3 id="Duyet-database"><a href="#Duyet-database" class="headerlink" title="Duyệt database"></a>Duyệt database</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$query</span> = <span class="variable">$con</span>-&gt;query(<span class="string">"SELECT * FROM users WHERE sex = 1"</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$row</span> = <span class="variable">$query</span>-&gt;fetch_assoc()) &#123;</span><br><span class="line">  <span class="built_in">echo</span> <span class="variable">$row</span>[<span class="string">'username'</span>].<span class="string">": "</span>.<span class="variable">$row</span>[<span class="string">'country'</span>].<span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Giải thích:</p>
+<p><code>*</code>Để duyệt database ta cần truy vấn database, tất cả dữ liệu truy vấn thành công được lưu trong một biến $query.<br><code>*</code>Gọi tới phương thức <code>fetch_assoc()</code> để trả về giá trị của 1 lần truy vấn được lưu trong <code>$query</code>. Dùng “while” để trả về giá trị 1 lần truy vấn tiếp theo, kiểm tra cho đến khi nào không truy vấn được nữa (NULL) thì dừng. Mỗi lần truy vấn thành công thì in ra “username” và “country”.</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#php">
+    <span class="tag-code">php</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/ham-array_rand/">
+        <span class="nav-arrow">← </span>
+        
+          PHP – Random với array_rand()
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/php–xu-ly-json/">
+        
+          PHP – Xử lý JSON
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">URL QR</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Ket-noi-toi-1-database"><span class="toc-nav-text">Kết nối tới 1 database</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Tao-bang"><span class="toc-nav-text">Tạo bảng</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Them-du-lieu-vao-database"><span class="toc-nav-text">Thêm dữ liệu vào database</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Them-1-cot"><span class="toc-nav-text">Thêm 1 cột</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Cap-nhat-du-lieu-trong-database"><span class="toc-nav-text">Cập nhật dữ liệu trong database</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Xoa-gia-tri-trong-database"><span class="toc-nav-text">Xóa giá trị trong database</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Duyet-database"><span class="toc-nav-text">Duyệt database</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://localhost:4000/ket-noi-mysqli/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+        
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "PHP – Cơ sở dữ liệu Mysqli",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+<script>
+  var disqus_shortname = '';
+  
+  var disqus_url = 'http://localhost:4000/ket-noi-mysqli/';
+  
+  (/*function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }*/)();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Nguyen Minh Duc
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
